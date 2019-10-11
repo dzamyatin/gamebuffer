@@ -1,0 +1,5 @@
+app/vendor
+app/var
+.idea
+data
+xdebug.ini

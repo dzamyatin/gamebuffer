@@ -1,0 +1,33 @@
+version: '3'
+services:
+  fpm:
+    container_name: fpm
+    image: dzamyatin/php73:1.0.1
+    volumes:
+      - ./app:/var/www/html
+      - ./xdebug.ini:/etc/php.d/xdebug.ini
+  nginx:
+    container_name: nginx
+    image: dzamyatin/nginx:1.0.1
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - 9123:80
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app
+      POSTGRES_USER: user
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/db:/var/lib/postgresql/data/pgdata
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
