@@ -10,3 +10,6 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+    App\ApiListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

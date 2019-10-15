@@ -1,12 +1,11 @@
 doctrine:
     dbal:
         driver: 'pdo_pgsql'
-        server_version: '12.0'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
         url: '%env(resolve:DATABASE_URL)%'
+#        user: user
+#        password: password
+#        host: db
+#        default_dbname: app
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
