@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTimeImmutable;
+use DateTimeInterface;
+use DateTime;
 
 class AbstractGame
 {
@@ -28,7 +31,7 @@ class AbstractGame
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 3,
-     *      max = 20,
+     *      max = 50,
      * )
      */
     protected $source;
@@ -38,12 +41,12 @@ class AbstractGame
         return $this->id;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getDatetime(): ?DateTimeInterface
     {
-        return $this->datetime;
+        return (new DateTimeImmutable())->createFromMutable($this->datetime);
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setDatetime(DateTimeInterface $datetime): self
     {
         $this->datetime = $datetime;
 

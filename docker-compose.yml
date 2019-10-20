@@ -3,15 +3,21 @@ services:
   fpm:
     container_name: fpm
     restart: always
-    image: dzamyatin/php73-1.0.10
+    image: dzamyatin/php73-1.0.11
     volumes:
       - ./app:/var/www/html #TODO rebuild container with code
       - ./xdebug.ini:/etc/php.d/xdebug.ini #TODO delete debug
   migration:
-    image: dzamyatin/php73-1.0.10
+    image: dzamyatin/php73-1.0.11
     volumes:
       - ./app:/var/www/html #TODO rebuild container with code
     entrypoint: ["/var/www/html/bin/console", "doctrine:migrations:migrate", "--no-interaction"]
+  process:
+    restart: always
+    image: dzamyatin/php73-1.0.11
+    volumes:
+      - ./app:/var/www/html #TODO rebuild container with code
+    entrypoint: ["/var/www/html/bin/console", "gamebuffer:process"]
   nginx:
     container_name: nginx
     image: dzamyatin/nginx:1.0.1
@@ -25,6 +31,7 @@ services:
     container_name: redis
     image: "redis:alpine"
   db:
+    container_name: db
     image: mysql:5.7
     restart: always
     ports:
@@ -35,3 +42,9 @@ services:
       MYSQL_USER: root
     volumes:
       - ./data/db:/var/lib/mysql
+  tor:
+    container_name: tor
+    image: dperson/torproxy
+    ports:
+      - 8118:8118
+      - 9050:9050

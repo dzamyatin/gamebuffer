@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\GameBuffer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Generator;
 
 /**
  * @method GameBuffer|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +15,25 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class GameBufferRepository extends ServiceEntityRepository
 {
+
+    const PAGE_SIZE = 100;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, GameBuffer::class);
     }
 
-    // /**
-    //  * @return GameBuffer[] Returns an array of GameBuffer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function gameBufferIterator(): Generator
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $offset = 0;
+        while ($gameBufferList = $this->findBy(
+            ['processed' => false],
+            null,
+            self::PAGE_SIZE,
+            $offset
+        )) {
+            $offset += self::PAGE_SIZE;
+            yield from $gameBufferList;
+        }
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?GameBuffer
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

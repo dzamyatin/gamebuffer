@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameBufferTokenRepository")
@@ -10,6 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 class GameBufferToken
 {
     use GameTokenTrait;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull
+     * @Assert\Language
+     */
+    protected $language;
 
     /**
      * @ORM\Id()
@@ -23,6 +31,30 @@ class GameBufferToken
      * @ORM\JoinColumn(nullable=false)
      */
     private $gameBuffer;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
+     */
+    protected $sport;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
+     */
+    protected $league;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
+     */
+    protected $teamOne;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
+     */
+    protected $teamTwo;
 
     public function getGameBuffer(): ?GameBuffer
     {

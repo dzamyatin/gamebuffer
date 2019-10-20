@@ -19,6 +19,11 @@ class GameBuffer extends AbstractGame
      */
     private $game;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $processed = false;
+
     public function getGameBufferToken(): ?GameBufferToken
     {
         return $this->gameBufferToken;
@@ -28,7 +33,6 @@ class GameBuffer extends AbstractGame
     {
         $this->gameBufferToken = $gameBufferToken;
 
-        // set the owning side of the relation if necessary
         if ($this !== $gameBufferToken->getGameBuffer()) {
             $gameBufferToken->setGameBuffer($this);
         }
@@ -44,6 +48,18 @@ class GameBuffer extends AbstractGame
     public function setGame(?Game $game): self
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    public function getProcessed(): ?bool
+    {
+        return $this->processed;
+    }
+
+    public function setProcessed(bool $processed): self
+    {
+        $this->processed = $processed;
 
         return $this;
     }

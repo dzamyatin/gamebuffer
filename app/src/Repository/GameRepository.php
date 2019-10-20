@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use DateTimeImmutable;
 
 /**
  * @method Game|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +15,21 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class GameRepository extends ServiceEntityRepository
 {
+    const DEFAULT_GAP = 26;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Game::class);
     }
 
-    // /**
-    //  * @return Game[] Returns an array of Game objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByInterval(DateTimeImmutable $dateTime, int $hours = self::DEFAULT_GAP)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('g.datetime BETWEEN :from AND :to')
+            ->setParameter('from', $dateTime->modify("-$hours hours") )
+            ->setParameter('to', $dateTime->modify("+$hours hours") )
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Game
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -8,51 +8,51 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait GameTokenTrait
 {
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 2,
-     *      max = 20,
+     *      max = 50,
      * )
      */
     protected $language;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 3,
-     *      max = 30,
+     *      max = 50,
      * )
      */
     protected $sport;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 3,
-     *      max = 30,
+     *      max = 50,
      * )
      */
     protected $league;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 3,
-     *      max = 30,
+     *      max = 50,
      * )
      */
     protected $teamOne;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
      *      min = 3,
-     *      max = 20,
+     *      max = 50,
      * )
      */
     protected $teamTwo;

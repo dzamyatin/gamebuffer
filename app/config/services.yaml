@@ -6,10 +6,27 @@ services:
         autoconfigure: true
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Event,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
     App\ApiListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
+    Stichoza\GoogleTranslate\GoogleTranslate:
+        arguments:
+            - en
+            - ru
+            - timeout: 10
+              proxy:
+                  http: '%env(resolve:TOR_URL)%'
+                  https: '%env(resolve:TOR_URL)%'
+    App\Manager\TranslatorManager:
+        arguments:
+            $translators:
+                - '@App\Translator\CacheTranslator'
+                - '@App\Translator\GoogleTranslator'
+    App\Translator\CacheTranslator:
+        tags:
+            - { name: kernel.event_listener, event: translated, method: listen }
+    Wamania\Snowball\English:

@@ -43,7 +43,6 @@ class Game extends AbstractGame
     {
         if ($this->gameBuffers->contains($gameBuffer)) {
             $this->gameBuffers->removeElement($gameBuffer);
-            // set the owning side to null (unless already changed)
             if ($gameBuffer->getGame() === $this) {
                 $gameBuffer->setGame(null);
             }
